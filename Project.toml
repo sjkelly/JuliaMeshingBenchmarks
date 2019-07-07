@@ -3,6 +3,14 @@ uuid = "508b7c1e-a04b-11e9-19af-959cc8991020"
 authors = ["Steve Kelly <kd2cca@gmail.com>"]
 version = "0.1.0"
 
+[deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
+GeometryTypes = "4d00f742-c7ba-57c2-abde-4428a4b178cb"
+MeshIO = "7269a6da-0436-5bbc-96c2-40638cbb6118"
+Meshing = "e6723b4c-ebff-59f1-b4b7-d97aa5274f73"
+NRRD = "9bb6cfbd-7763-5393-b1b5-1c8e09872146"
+
 [compat]
 julia = "1"
 
