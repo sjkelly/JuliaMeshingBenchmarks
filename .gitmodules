@@ -1,0 +1,3 @@
+[submodule "Seg3DData"]
+	path = Seg3DData
+	url = https://github.com/CIBC-Internal/Seg3DData.git
