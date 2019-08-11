@@ -23,7 +23,16 @@ function benchmark()
     # Meshing might want to support this format natively
     ctasdf = SignedDistanceField(HyperRectangle(Vec(0,0,0), Vec(10,10,10)),ctacardio.data)
     println("CTA-cardio.nrrd loaded")
-    m = @btime HomogenousMesh($ctasdf, MarchingCubes($q))
+    println("CTA-cardio.nrrd Float32 runtime")
+    m = @btime HomogenousMesh{Point{3,Float32},Face{3,Int}}($ctasdf, MarchingCubes($q))
+    for i in 1:5
+        m = @btime HomogenousMesh{Point{3,Float32},Face{3,Int}}($ctasdf, MarchingCubes($q))
+    end
+    println("CTA-cardio.nrrd Float64 runtime")
+    m = @btime HomogenousMesh{Point{3,Float64},Face{3,Int}}($ctasdf, MarchingCubes($q))
+    for i in 1:5
+        m = @btime HomogenousMesh{Point{3,Float64},Face{3,Int}}($ctasdf, MarchingCubes($q))
+    end
     save("ctacardio.ply", m)
 end
 
