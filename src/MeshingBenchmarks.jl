@@ -11,7 +11,8 @@ function benchmark()
     here = dirname(@__FILE__)
 
     println(pwd())
-    ctacardio = load(here*"/../data/CTA-cardio.nrrd")
+    println("CTA-cardio.nrrd loading...")
+    ctacardio = @btime load($here*"/../data/CTA-cardio.nrrd")
     q = 100
 
     samples = 1
@@ -19,15 +20,15 @@ function benchmark()
     println("CTA-cardio.nrrd loaded")
 
     println("CTA-cardio.nrrd MarchingCubes Float32 runtime")
-    mc = @btime HomogenousMesh(isosurface($ctacardio, MarchingCubes(iso=$q, insidepositive=true), Point{3,Float32}, Face{3,Int})...)
+    mc = @btime HomogenousMesh{Point{3,Float32}, Face{3,Int}}($ctacardio, MarchingCubes(iso=Float32($q), insidepositive=true))
     for i in 1:samples-1
-        @btime HomogenousMesh(isosurface($ctacardio, MarchingCubes(iso=$q, insidepositive=true), Point{3,Float32}, Face{3,Int})...)
+        @btime HomogenousMesh{Point{3,Float32}, Face{3,Int}}($ctacardio, MarchingCubes(iso=Float32($q), insidepositive=true))
     end
 
     println("CTA-cardio.nrrd MarchingCubes Float64 runtime")
-    @btime HomogenousMesh(isosurface($ctacardio, MarchingCubes(iso=$q, insidepositive=true), Point{3,Float64}, Face{3,Int})...)
+    @btime HomogenousMesh{Point{3,Float64}, Face{3,Int}}($ctacardio, MarchingCubes(iso=$q, insidepositive=true))
     for i in 1:samples-1
-        @btime HomogenousMesh(isosurface($ctacardio, MarchingCubes(iso=$q, insidepositive=true), Point{3,Float64}, Face{3,Int})...)
+        @btime HomogenousMesh{Point{3,Float64}, Face{3,Int}}($ctacardio, MarchingCubes(iso=$q, insidepositive=true))
     end
 
     # println("CTA-cardio.nrrd MarchingTetrahedra Float32 runtime")
